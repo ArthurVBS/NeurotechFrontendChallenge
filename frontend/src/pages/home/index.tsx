@@ -1,8 +1,18 @@
 import React from 'react'
-import { Container } from './styles'
+import { useAuth } from '../../contexts/authContext'
+import { BackgroundContainer, Container } from './styles'
 
 const Home: React.FC = () => {
-  return <Container>Home ^^</Container>
+  const { logout } = useAuth()
+
+  return (
+    <BackgroundContainer>
+      <Container>
+        <h1>Home ^^</h1>
+        <button onClick={() => logout()}>logout</button>
+      </Container>
+    </BackgroundContainer>
+  )
 }
 
 export default Home

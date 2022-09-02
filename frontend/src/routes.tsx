@@ -1,10 +1,10 @@
 import React from 'react'
-import { useUser } from './contexts/authContext'
+import { useAuth } from './contexts/authContext'
 import Home from './pages/home'
 import Login from './pages/login'
 
 const Routes: React.FC = () => {
-  const { user } = useUser()
+  const { user } = useAuth()
 
   const displayPage = () => {
     return user.auth ? <Home /> : <Login />

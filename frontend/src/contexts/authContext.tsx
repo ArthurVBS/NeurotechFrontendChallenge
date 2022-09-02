@@ -27,7 +27,7 @@ const initialValue = {
 
 const AuthContext = createContext<AuthContextType>(initialValue)
 
-export const useUser = () => useContext(AuthContext)
+export const useAuth = () => useContext(AuthContext)
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = usePersistedState('user', initialValue.user)

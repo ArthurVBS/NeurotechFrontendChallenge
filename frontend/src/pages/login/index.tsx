@@ -1,16 +1,23 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
-import { useUser } from '../../contexts/authContext'
-import { Container } from './styles'
+import { useAuth } from '../../contexts/authContext'
+import { BackgroundContainer, Container } from './styles'
 
 const Login: React.FC = () => {
-  const { login } = useUser()
+  const { login } = useAuth()
 
-  useEffect(() => {
+  const handleClick = () => {
     login('John Doe', 'johndoe@gmail.com', '123456')
-  }, [])
+  }
 
-  return <Container>Login ^^</Container>
+  return (
+    <BackgroundContainer>
+      <Container>
+        <h1>Login ^^</h1>
+        <button onClick={() => handleClick()}>login</button>
+      </Container>
+    </BackgroundContainer>
+  )
 }
 
 export default Login
