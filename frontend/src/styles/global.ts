@@ -9,22 +9,22 @@ export default createGlobalStyle`
     text-decoration: none;
     box-sizing: border-box;
     scrollbar-width: auto;
-    scrollbar-color: ${props => props.theme.background.primary} ${props =>
-  props.theme.background.primary};
+    scrollbar-color: ${props => props.theme.background.secondary} ${props =>
+  props.theme.background.secondary};
   }
 
   *::-webkit-scrollbar {
     width: 16px;
   }
 
-  *::-webkit-scrollbar-track, ::-webkit-scrollbar-corner {
-    background: ${props => props.theme.background.primary};
+  *::-webkit-scrollbar-track, *::-webkit-scrollbar-corner {
+    background: ${props => props.theme.background.secondary};
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: ${props => props.theme.color.primary};
+    background-color: ${props => props.theme.color.secondary};
     border-radius: 8px;
-    border: 4px solid ${props => props.theme.background.primary};
+    border: 4px solid ${props => props.theme.background.secondary};
   }
 
   *::-webkit-scrollbar-thumb:hover {
