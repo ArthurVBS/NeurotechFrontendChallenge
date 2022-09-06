@@ -28,6 +28,14 @@ const Home: React.FC = () => {
     )
   }
 
+  const displayAvatar = () => {
+    return user.github.has ? (
+      <UserImg src={user.github.avatar} alt="User profile" />
+    ) : (
+      <p>Sem imagem...</p>
+    )
+  }
+
   return (
     <BackgroundContainer>
       <Container>
@@ -40,10 +48,7 @@ const Home: React.FC = () => {
         </Header>
 
         <UserSection>
-          <UserImg
-            src="https://avatars.githubusercontent.com/u/84406367?v=4"
-            alt="User profile"
-          />
+          {displayAvatar()}
           <UserTitle>Olá, {user.name}!</UserTitle>
         </UserSection>
 

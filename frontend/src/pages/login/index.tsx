@@ -1,9 +1,9 @@
 import React from 'react'
 import Field from '../../components/field'
+import Radio from '../../components/radio'
 
 import { useAuth } from '../../contexts/authContext'
 import { capitalizeSentence } from '../../utils/capitalizeSentence'
-import { validateName } from '../../utils/validate'
 import {
   BackgroundContainer,
   Container,
@@ -17,13 +17,13 @@ const Login: React.FC = () => {
   const { login } = useAuth()
 
   const [name, setName] = React.useState('')
-  const [password, setPassword] = React.useState('')
+  const [hasGithub, setHasGithub] = React.useState(false)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (validateName(name) && password) {
-      login(capitalizeSentence(name), 'email@email.com', password)
+    if (name) {
+      login(capitalizeSentence(name), hasGithub)
     }
   }
 
@@ -36,13 +36,14 @@ const Login: React.FC = () => {
         </Header>
 
         <FormContainer onSubmit={e => handleSubmit(e)}>
-          <Field label="Nome" type="text" state={name} setState={setName} />
           <Field
-            label="Senha"
-            type="password"
-            state={password}
-            setState={setPassword}
+            label={hasGithub ? 'Github' : 'Nome'}
+            type="text"
+            state={name}
+            setState={setName}
           />
+
+          <Radio state={hasGithub} setState={setHasGithub} />
           <SubmitButton>Continuar</SubmitButton>
         </FormContainer>
       </Container>

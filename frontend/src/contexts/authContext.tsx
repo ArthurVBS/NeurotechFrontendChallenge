@@ -1,16 +1,21 @@
 import { createContext, ReactNode, useContext } from 'react'
+import { getData } from '../services/githubApi'
 import usePersistedState from '../utils/usePersistedState'
+
+interface IGithub {
+  has: boolean
+  avatar: string
+}
 
 interface IUser {
   auth: boolean
   name: string
-  email: string
-  password: string
+  github: IGithub
 }
 
 type AuthContextType = {
   user: IUser
-  login: (name: string, email: string, password: string) => void
+  login: (name: string, hasGithub: boolean) => void
   logout: () => void
 }
 
@@ -18,10 +23,12 @@ const initialValue = {
   user: {
     auth: false,
     name: '',
-    email: '',
-    password: '',
+    github: {
+      has: false,
+      avatar: '',
+    },
   },
-  login: (name: string, email: string, password: string) => {},
+  login: (name: string, hasGithub: boolean) => {},
   logout: () => {},
 }
 
@@ -32,8 +39,22 @@ export const useAuth = () => useContext(AuthContext)
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = usePersistedState('user', initialValue.user)
 
-  const login = (name: string, email: string, password: string) => {
-    setUser({ auth: true, name: name, email: email, password: password })
+  const login = async (name: string, hasGithub: boolean) => {
+    let github: IGithub = initialValue.user.github
+
+    if (hasGithub) {
+      const response = await getData(name)
+
+      if (response.status === 200) {
+        github = {
+          has: true,
+          avatar: response.data.avatar_url,
+        }
+        name = response.data.name
+      }
+    }
+
+    setUser({ auth: true, name: name, github: github })
   }
 
   const logout = () => {
