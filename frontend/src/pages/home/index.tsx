@@ -25,16 +25,13 @@ const Home: React.FC = () => {
     const response = await getAllTodos()
 
     if (response.status == 200) {
-      response.data.forEach((data: ResponseType) => {
-        setTasks([...tasks, data])
-        console.log('data: ', data)
-      })
+      setTasks(response.data)
     }
   }
 
   useEffect(() => {
     getTasks()
-  }, [])
+  }, [tasks])
 
   const displayTasks = () => {
     return tasks.map(task => (

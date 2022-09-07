@@ -1,4 +1,5 @@
 import React from 'react'
+import { deleteTodo } from '../../services/api'
 import { Container, Content, Description, Title, TrashButton } from './styles'
 
 type Props = {
@@ -8,6 +9,14 @@ type Props = {
 }
 
 const Task: React.FC<Props> = ({ _id, title, description }) => {
+  const deleteTask = async () => {
+    await deleteTodo(_id)
+  }
+
+  const handleClick = () => {
+    deleteTask()
+  }
+
   return (
     <Container>
       <Content>
@@ -15,7 +24,7 @@ const Task: React.FC<Props> = ({ _id, title, description }) => {
         <Description>{description}</Description>
       </Content>
 
-      <TrashButton>
+      <TrashButton onClick={() => handleClick()}>
         <i className="far fa-trash-alt"></i>
       </TrashButton>
     </Container>
