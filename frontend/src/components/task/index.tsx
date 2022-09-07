@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Content, Description, Title, TrashButton } from './styles'
 
 type Props = {
-  _id: number
+  _id: string
   title: string
   description: string
 }

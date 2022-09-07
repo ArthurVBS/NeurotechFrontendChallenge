@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Task from '../../components/task'
 import { useAuth } from '../../contexts/authContext'
+import { ResponseType } from '../../types/response'
+import { getAllTodos } from '../../services/api'
 import {
   BackgroundContainer,
   Container,
@@ -17,15 +19,32 @@ import {
 
 const Home: React.FC = () => {
   const { user, logout } = useAuth()
+  const [tasks, setTasks] = useState<ResponseType[]>([])
 
-  const getTasks = () => {
-    return (
-      <>
-        <Task _id={1} title="Teste" description="Testando o teste" />
-        <Task _id={2} title="Teste 2" description="Testando o teste 2" />
-        <Task _id={3} title="Teste 3" description="Testando o teste 3" />
-      </>
-    )
+  const getTasks = async () => {
+    const response = await getAllTodos()
+
+    if (response.status == 200) {
+      response.data.forEach((data: ResponseType) => {
+        setTasks([...tasks, data])
+        console.log('data: ', data)
+      })
+    }
+  }
+
+  useEffect(() => {
+    getTasks()
+  }, [])
+
+  const displayTasks = () => {
+    return tasks.map(task => (
+      <Task
+        key={task._id}
+        _id={task._id}
+        title={task.title}
+        description={task.description}
+      />
+    ))
   }
 
   const displayAvatar = () => {
@@ -54,7 +73,7 @@ const Home: React.FC = () => {
 
         <TasksSection>
           <TasksTitle>Minhas Tasks</TasksTitle>
-          <TasksWrapper>{getTasks()}</TasksWrapper>
+          <TasksWrapper>{displayTasks()}</TasksWrapper>
           <AddTaskButton>+</AddTaskButton>
         </TasksSection>
       </Container>

@@ -90,6 +90,7 @@ export const TasksWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-bottom: 72px;
   gap: 16px;
 `
 
