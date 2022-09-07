@@ -4,8 +4,7 @@
   "main": "./src/api.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon src/api.js",
-    "start_netlify": "NODE_ENV=development ./node_modules/.bin/netlify-lambda serve src",
+    "start": "NODE_ENV=development ./node_modules/.bin/netlify-lambda serve src",
     "build": "NODE_ENV=production ./node_modules/.bin/netlify-lambda build src"
   },
   "dependencies": {
@@ -17,7 +16,5 @@
     "netlify-lambda": "^2.0.15",
     "serverless-http": "^3.0.2"
   },
-  "devDependencies": {
-    "nodemon": "^2.0.15"
-  }
+  "devDependencies": {}
 }
