@@ -12,10 +12,16 @@ import {
   TasksSection,
   TasksTitle,
   UserSection,
-  UserImg,
+  UserGithubImg,
+  UserSmileImg,
   UserTitle,
   TasksWrapper,
   AddTaskButton,
+  Content,
+  TasksHeader,
+  UserHeader,
+  UserFooter,
+  UserTextWrapper,
 } from './styles'
 
 const Home: React.FC = () => {
@@ -47,11 +53,15 @@ const Home: React.FC = () => {
     ))
   }
 
-  const displayAvatar = () => {
-    return user.github.has ? (
-      <UserImg src={user.github.avatar} alt="User profile" />
-    ) : (
-      <p>Sem imagem...</p>
+  const displayGithubUserImg = () => {
+    return <UserGithubImg src={user.github.avatar} alt="User profile" />
+  }
+
+  const displaySmileUserImg = () => {
+    return (
+      <UserSmileImg>
+        <img src="./smile.svg" alt="User profile" />
+      </UserSmileImg>
     )
   }
 
@@ -66,16 +76,29 @@ const Home: React.FC = () => {
           <img src="./favicon.svg" alt="logo" />
         </Header>
 
-        <UserSection>
-          {displayAvatar()}
-          <UserTitle>Olá, {user.name}!</UserTitle>
-        </UserSection>
+        <Content>
+          <UserSection>
+            <UserHeader>
+              {user.github.has ? displayGithubUserImg() : displaySmileUserImg()}
+              <UserTitle>Olá, {user.name}!</UserTitle>
+            </UserHeader>
+            <UserFooter>
+              <img src="./medium_logo.svg" alt="logo" />
+              <UserTextWrapper>
+                <h3>do it!</h3>
+                <p>seu to do app favorito ;)</p>
+              </UserTextWrapper>
+            </UserFooter>
+          </UserSection>
 
-        <TasksSection>
-          <TasksTitle>Minhas Tasks</TasksTitle>
-          <TasksWrapper>{displayTasks()}</TasksWrapper>
-          <AddTaskButton>+</AddTaskButton>
-        </TasksSection>
+          <TasksSection>
+            <TasksHeader>
+              <TasksTitle>Minhas tasks</TasksTitle>
+              <AddTaskButton>+</AddTaskButton>
+            </TasksHeader>
+            <TasksWrapper>{displayTasks()}</TasksWrapper>
+          </TasksSection>
+        </Content>
       </Container>
     </BackgroundContainer>
   )

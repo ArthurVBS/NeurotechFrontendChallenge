@@ -23,7 +23,8 @@ export const Container = styled.div`
   border-radius: 16px;
 
   @media (min-width: 768px) {
-    gap: 48px;
+    gap: calc(48px * 2);
+    border-radius: 8px;
     padding: 16px 48px;
   }
 `
