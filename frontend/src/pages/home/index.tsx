@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Task from '../../components/task'
 import { useAuth } from '../../contexts/authContext'
+import { useTasks } from '../../contexts/tasksContext'
 import { ResponseType } from '../../types/response'
 import { getAllTodos } from '../../services/api'
 import {
@@ -19,6 +20,7 @@ import {
 
 const Home: React.FC = () => {
   const { user, logout } = useAuth()
+  const { tasksHaveChanged, setTasksHaveChanged } = useTasks()
   const [tasks, setTasks] = useState<ResponseType[]>([])
 
   const getTasks = async () => {
@@ -31,7 +33,8 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     getTasks()
-  }, [])
+    setTasksHaveChanged(false)
+  }, [tasksHaveChanged])
 
   const displayTasks = () => {
     return tasks.map(task => (
