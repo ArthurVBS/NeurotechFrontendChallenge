@@ -27,8 +27,6 @@ export const Description = styled.p`
   font-size: 0.9em;
 `
 
-export const ButtonWrapper = styled.div``
-
 export const TrashButton = styled.button`
   background-color: ${props => props.theme.background.secondary};
   color: ${props => props.theme.text};
@@ -43,6 +41,38 @@ export const TrashButton = styled.button`
   }
 `
 
-export const ConfirmButton = styled.button``
+export const ButtonWrapper = styled.div`
+  background-color: ${props => props.theme.background.secondary};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
 
-export const CancelButton = styled.button``
+export const ConfirmButton = styled.button`
+  background-color: ${props => props.theme.background.secondary};
+  color: ${props => props.theme.text};
+  cursor: pointer;
+  font-size: 1.5em;
+  border: none;
+  padding: 8px;
+  transition: color 0.4s;
+
+  :hover {
+    color: ${props => props.theme.color.secondary};
+  }
+`
+
+export const CancelButton = styled.button`
+  background-color: ${props => props.theme.background.secondary};
+  color: ${props => props.theme.text};
+  cursor: pointer;
+  font-size: 1.5em;
+  border: none;
+  padding: 8px;
+  transition: color 0.4s;
+
+  :hover {
+    color: ${props => props.theme.color.secondary};
+  }
+`

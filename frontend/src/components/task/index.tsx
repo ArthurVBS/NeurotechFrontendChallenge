@@ -38,21 +38,27 @@ const Task: React.FC<Props> = ({ _id, title, description }) => {
 
   const displayTrashButton = () => {
     return (
-      <TrashButton onClick={() => handleClick()}>
-        <i className="far fa-trash-alt"></i>
-      </TrashButton>
+      <abbr title="Excluir">
+        <TrashButton onClick={() => handleClick()}>
+          <i className="far fa-trash-alt"></i>
+        </TrashButton>
+      </abbr>
     )
   }
 
   const displayConfirmCancelButtons = () => {
     return (
       <ButtonWrapper>
-        <CancelButton onClick={() => handleClick()}>
-          <i className="fas fa-times"></i>
-        </CancelButton>
-        <ConfirmButton onClick={() => handleClickDelete()}>
-          <i className="fas fa-check"></i>
-        </ConfirmButton>
+        <abbr title="Não apagar">
+          <CancelButton onClick={() => handleClick()}>
+            <i className="fas fa-times"></i>
+          </CancelButton>
+        </abbr>
+        <abbr title="Apagar">
+          <ConfirmButton onClick={() => handleClickDelete()}>
+            <i className="fas fa-check"></i>
+          </ConfirmButton>
+        </abbr>
       </ButtonWrapper>
     )
   }
