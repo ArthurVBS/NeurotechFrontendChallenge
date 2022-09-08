@@ -31,7 +31,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     getTasks()
-  }, [tasks])
+  }, [])
 
   const displayTasks = () => {
     return tasks.map(task => (
