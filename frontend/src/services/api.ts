@@ -7,7 +7,7 @@ export const api = axios.create({
   baseURL: BASE_URL,
 })
 
-export const getAllTodos = async () => {
+export const getAllTodo = async () => {
   return await api.get(`/todos`).catch(err => {
     return err.response
   })
@@ -20,13 +20,13 @@ export const getTodoById = async (id: string) => {
 }
 
 export const createTodo = async (todo: RequestType) => {
-  return await api.post(`/todos`, { todo }).catch(err => {
+  return await api.post(`/todos`, todo).catch(err => {
     return err.response
   })
 }
 
 export const updateTodo = async (id: string, todo: RequestType) => {
-  return await api.patch(`/todos/${id}`, { todo }).catch(err => {
+  return await api.patch(`/todos/${id}`, todo).catch(err => {
     return err.response
   })
 }

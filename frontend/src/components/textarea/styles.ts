@@ -14,11 +14,13 @@ export const Label = styled.label`
   letter-spacing: 1px;
 `
 
-export const Input = styled.input`
+export const Area = styled.textarea`
   background-color: ${props => props.theme.background.secondary};
   color: ${props => props.theme.text};
   font-size: 1em;
-  min-height: 48px;
+  font-family: 'Inter', sans-serif;
+  min-height: 96px;
+  resize: none;
   padding: 8px;
   border-radius: 4px;
   border: none;

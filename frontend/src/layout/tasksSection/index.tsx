@@ -3,11 +3,15 @@ import { AddTaskButton, Container, Header, TasksWrapper, Title } from './styles'
 
 import Task from '../../components/task'
 import { useTasks } from '../../contexts/tasksContext'
-import { getAllTodos } from '../../services/api'
+import { getAllTodo } from '../../services/api'
 import { ResponseType } from '../../types/response'
 import { MessageType } from '../../types/message'
 
-const TasksSection: React.FC = () => {
+type Props = {
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const TasksSection: React.FC<Props> = ({ setShowModal }) => {
   const { tasksHaveChanged, setTasksHaveChanged } = useTasks()
   const [message, setMessage] = useState<MessageType>({
     msg: '',
@@ -21,7 +25,7 @@ const TasksSection: React.FC = () => {
       show: true,
     })
 
-    const response = await getAllTodos()
+    const response = await getAllTodo()
     response.status == 200
       ? (setTasks(response.data), setMessage({ msg: '', show: false }))
       : setMessage({
@@ -50,11 +54,15 @@ const TasksSection: React.FC = () => {
     return <h3>{message.msg}</h3>
   }
 
+  const handleClick = () => {
+    setShowModal(true)
+  }
+
   return (
     <Container>
       <Header>
         <Title>Minhas tasks</Title>
-        <AddTaskButton>+</AddTaskButton>
+        <AddTaskButton onClick={() => handleClick()}>+</AddTaskButton>
       </Header>
       <TasksWrapper>
         {message.show ? displayMessage() : displayTasks()}
