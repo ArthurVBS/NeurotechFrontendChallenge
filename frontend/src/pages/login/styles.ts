@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 export const BackgroundContainer = styled.main`
   background-color: ${props => props.theme.background.secondary};
-  // background-image: ${props => props.theme.color.gradient};
   display: flex;
   justify-content: stretch;
   align-items: stretch;
@@ -62,26 +61,6 @@ export const MobileLogo = styled.img`
   @media (min-width: 768px) {
     display: none;
   }
-`
-
-export const FormContainer = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-  gap: 16px;
-`
-
-export const SubmitButton = styled.button`
-  background-image: ${props => props.theme.color.gradient};
-  color: ${props => props.theme.background.primary};
-  cursor: pointer;
-  border-radius: 4px;
-  font-weight: 700;
-  font-size: 1em;
-  margin-top: 24px;
-  padding: 12px;
-  border: none;
 `
 
 export const RightContainer = styled.div`

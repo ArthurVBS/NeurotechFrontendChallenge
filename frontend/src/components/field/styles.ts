@@ -18,7 +18,7 @@ export const Input = styled.input`
   background-color: ${props => props.theme.background.secondary};
   color: ${props => props.theme.text};
   font-size: 1em;
-  min-height: 40px;
+  min-height: 48px;
   padding: 8px;
   border-radius: 4px;
   border: none;

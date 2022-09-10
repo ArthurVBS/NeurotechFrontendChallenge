@@ -24,7 +24,7 @@ export const InputWrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 6px;
-  padding: 6px;
+  padding: 8px;
   border-radius: 4px;
 `
 
