@@ -1,5 +1,5 @@
 export type ModalType = {
   _id: string
-  action: string // 'create' | 'none' | 'update'
+  action: string // 'add' | 'delete' | 'none' | 'update'
   show: boolean
 }

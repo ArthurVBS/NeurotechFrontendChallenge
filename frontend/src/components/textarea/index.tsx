@@ -5,10 +5,17 @@ type Props = {
   label: string
   state: any
   setState: React.SetStateAction<any>
+  disabled?: boolean
   placeholder?: string
 }
 
-const TextArea: React.FC<Props> = ({ label, state, setState, placeholder }) => {
+const TextArea: React.FC<Props> = ({
+  label,
+  state,
+  setState,
+  disabled,
+  placeholder,
+}) => {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setState(e.target.value)
   }
@@ -21,6 +28,7 @@ const TextArea: React.FC<Props> = ({ label, state, setState, placeholder }) => {
         value={state}
         onChange={e => handleChange(e)}
         placeholder={placeholder}
+        disabled={disabled}
         id={label.toLowerCase()}
       />
     </Container>

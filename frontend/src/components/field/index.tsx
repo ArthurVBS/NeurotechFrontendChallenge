@@ -6,6 +6,7 @@ type Props = {
   type: string
   state: any
   setState: React.SetStateAction<any>
+  disabled?: boolean
   placeholder?: string
 }
 
@@ -14,6 +15,7 @@ const Field: React.FC<Props> = ({
   type,
   state,
   setState,
+  disabled,
   placeholder,
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +31,7 @@ const Field: React.FC<Props> = ({
         value={state}
         onChange={e => handleChange(e)}
         placeholder={placeholder}
+        disabled={disabled}
         id={label.toLowerCase()}
       />
     </Container>

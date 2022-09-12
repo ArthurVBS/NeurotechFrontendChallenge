@@ -1,16 +1,12 @@
 import React from 'react'
 import { useModal } from '../../contexts/modalContext'
-import { useTasks } from '../../contexts/tasksContext'
-import { deleteTodo } from '../../services/api'
 import {
-  ButtonWrapper,
-  CancelButton,
-  ConfirmButton,
   Container,
   Content,
   Description,
   Title,
   Button,
+  ButtonWrapper,
 } from './styles'
 
 type Props = {
@@ -20,50 +16,10 @@ type Props = {
 }
 
 const Task: React.FC<Props> = ({ _id, title, description }) => {
-  const [showConfirmCancelButtons, setShowConfirmCancelButtons] =
-    React.useState(false)
-
-  const { setTasksHaveChanged } = useTasks()
   const { setModal } = useModal()
 
-  const deleteTask = async () => {
-    await deleteTodo(_id)
-  }
-
-  const handleClick = () => {
-    setShowConfirmCancelButtons(!showConfirmCancelButtons)
-  }
-
   const handleClickDelete = () => {
-    setTasksHaveChanged(true)
-    deleteTask()
-  }
-
-  const displayButton = () => {
-    return (
-      <abbr title="Excluir">
-        <Button onClick={() => handleClick()}>
-          <i className="far fa-trash-alt"></i>
-        </Button>
-      </abbr>
-    )
-  }
-
-  const displayConfirmCancelButtons = () => {
-    return (
-      <ButtonWrapper>
-        <abbr title="Não apagar">
-          <CancelButton onClick={() => handleClick()}>
-            <i className="fas fa-times"></i>
-          </CancelButton>
-        </abbr>
-        <abbr title="Apagar">
-          <ConfirmButton onClick={() => handleClickDelete()}>
-            <i className="fas fa-check"></i>
-          </ConfirmButton>
-        </abbr>
-      </ButtonWrapper>
-    )
+    setModal({ _id: _id, action: 'delete', show: true })
   }
 
   const handleClickUpdate = () => {
@@ -77,15 +33,14 @@ const Task: React.FC<Props> = ({ _id, title, description }) => {
         <Description>{description}</Description>
       </Content>
 
-      <abbr title="Alterar">
+      <ButtonWrapper>
         <Button onClick={() => handleClickUpdate()}>
           <i className="fas fa-pencil-alt"></i>
         </Button>
-      </abbr>
-
-      {showConfirmCancelButtons
-        ? displayConfirmCancelButtons()
-        : displayButton()}
+        <Button onClick={() => handleClickDelete()}>
+          <i className="far fa-trash-alt"></i>
+        </Button>
+      </ButtonWrapper>
     </Container>
   )
 }

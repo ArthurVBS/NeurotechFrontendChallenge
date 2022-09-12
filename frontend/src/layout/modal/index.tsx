@@ -2,10 +2,15 @@ import React, { useEffect } from 'react'
 
 import Field from '../../components/field'
 import TextArea from '../../components/textarea'
-import { useModal } from '../../contexts/modalContext'
 
+import { useModal } from '../../contexts/modalContext'
 import { useTasks } from '../../contexts/tasksContext'
-import { createTodo, getTodoById, updateTodo } from '../../services/api'
+import {
+  createTodo,
+  deleteTodo,
+  getTodoById,
+  updateTodo,
+} from '../../services/api'
 
 import {
   BackgroundContainer,
@@ -22,57 +27,84 @@ const Modal: React.FC = () => {
   const [title, setTitle] = React.useState('')
   const [description, setDescription] = React.useState('')
 
-  const AddTask = async () => {
-    try {
-      await createTodo({ title, description })
-      setTasksHaveChanged(true)
-      setModal({ _id: '', action: 'none', show: false })
-    } catch (err) {
-      console.log(err)
-    }
+  const addTask = async () => {
+    await createTodo({ title, description })
+    setTasksHaveChanged(true)
+    setModal({ _id: '', action: 'none', show: false })
   }
 
-  const UpdateTask = async () => {
-    try {
-      await updateTodo(modal._id, { title, description })
-      setTasksHaveChanged(true)
-      setModal({ _id: '', action: 'none', show: false })
-    } catch (err) {
-      console.log(err)
-    }
+  const deleteTask = async () => {
+    await deleteTodo(modal._id)
+    setTasksHaveChanged(true)
+    setModal({ _id: '', action: 'none', show: false })
   }
 
-  const GetTaskById = async () => {
-    try {
-      const response = await getTodoById(modal._id)
-      setTitle(response.data.title)
-      setDescription(response.data.description)
-    } catch (err) {
-      console.log(err)
-    }
+  const updateTask = async () => {
+    await updateTodo(modal._id, { title, description })
+    setTasksHaveChanged(true)
+    setModal({ _id: '', action: 'none', show: false })
+  }
+
+  const getTaskById = async () => {
+    const response = await getTodoById(modal._id)
+    setTitle(response.data.title)
+    setDescription(response.data.description)
   }
 
   useEffect(() => {
-    if (modal.action == 'update') {
-      GetTaskById()
+    try {
+      if (modal.action !== 'add') {
+        getTaskById()
+      }
+    } catch (err) {
+      console.log(err)
     }
   }, [])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    modal.action === 'add' ? AddTask() : UpdateTask()
+
+    try {
+      if (modal.action === 'add') {
+        addTask()
+      } else if (modal.action === 'update') {
+        updateTask()
+      } else if (modal.action === 'delete') {
+        deleteTask()
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const handleClick = () => {
     setModal({ _id: '', action: 'none', show: false })
   }
 
+  const displayTitle = () => {
+    if (modal.action == 'add') {
+      return 'Criar Tarefa'
+    } else if (modal.action == 'delete') {
+      return 'Apagar Tarefa'
+    } else if (modal.action == 'update') {
+      return 'Alterar Tarefa'
+    }
+  }
+
+  const displaySubmitButton = () => {
+    if (modal.action == 'add') {
+      return 'Adicionar'
+    } else if (modal.action == 'delete') {
+      return 'Apagar'
+    } else if (modal.action == 'update') {
+      return 'Alterar'
+    }
+  }
+
   return (
     <BackgroundContainer>
       <Container onSubmit={e => handleSubmit(e)}>
-        <Title>
-          {modal.action === 'add' ? 'Criar Tarefa' : 'Alterar Tarefa'}
-        </Title>
+        <Title>{displayTitle()}</Title>
 
         <CloseButton onClick={() => handleClick()}>
           <i className="fas fa-times"></i>
@@ -84,6 +116,7 @@ const Modal: React.FC = () => {
           setState={setTitle}
           label="Título"
           placeholder="Insira o título da tarefa"
+          disabled={modal.action === 'delete'}
         />
 
         <TextArea
@@ -91,11 +124,10 @@ const Modal: React.FC = () => {
           setState={setDescription}
           label="Descrição"
           placeholder="Insira a descrição da tarefa"
+          disabled={modal.action === 'delete'}
         />
 
-        <SubmitButton>
-          {modal.action === 'add' ? 'Adicionar' : 'Alterar'}
-        </SubmitButton>
+        <SubmitButton>{displaySubmitButton()}</SubmitButton>
       </Container>
     </BackgroundContainer>
   )
