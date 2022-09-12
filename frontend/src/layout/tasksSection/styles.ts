@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+interface IProps {
+  hide: boolean
+}
+
 export const Container = styled.section`
   display: flex;
   flex-grow: 1;
@@ -51,25 +55,35 @@ export const TasksWrapper = styled.div`
   }
 `
 
-export const AddTaskButton = styled.button`
-  background-image: ${props => props.theme.color.gradient};
-  color: ${props => props.theme.text};
+export const ButtonWrapper = styled.div<IProps>`
   position: absolute;
   bottom: 24px;
-  right: 24px;
+  right: 0px;
+  width: 100%;
+  display: ${props => (props.hide ? 'none' : 'flex')};
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+
+  @media (min-width: 768px) {
+    position: static;
+    display: flex;
+    width: initial;
+    min-width: 40px;
+    min-height: 40px;
+  }
+`
+
+export const Button = styled.button`
+  background-image: ${props => props.theme.color.gradient};
+  color: ${props => props.theme.text};
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  font-size: 2em;
+  font-size: 1.2em;
   min-width: 48px;
   min-height: 48px;
   border-radius: 50%;
   border: none;
-
-  @media (min-width: 768px) {
-    position: static;
-    min-width: 40px;
-    min-height: 40px;
-  }
 `

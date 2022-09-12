@@ -32,8 +32,8 @@ const Task: React.FC<Props> = ({ _id, title, description }) => {
   }
 
   const handleClickDelete = () => {
-    deleteTask()
     setTasksHaveChanged(true)
+    deleteTask()
   }
 
   const displayTrashButton = () => {

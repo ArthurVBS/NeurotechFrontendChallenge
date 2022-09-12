@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { AddTaskButton, Container, Header, TasksWrapper, Title } from './styles'
+import {
+  Button,
+  ButtonWrapper,
+  Container,
+  Header,
+  TasksWrapper,
+  Title,
+} from './styles'
 
 import Task from '../../components/task'
 import { useTasks } from '../../contexts/tasksContext'
@@ -8,11 +15,13 @@ import { ResponseType } from '../../types/response'
 import { MessageType } from '../../types/message'
 
 type Props = {
+  showModal: boolean
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const TasksSection: React.FC<Props> = ({ setShowModal }) => {
+const TasksSection: React.FC<Props> = ({ showModal, setShowModal }) => {
   const { tasksHaveChanged, setTasksHaveChanged } = useTasks()
+
   const [message, setMessage] = useState<MessageType>({
     msg: '',
     show: false,
@@ -54,15 +63,26 @@ const TasksSection: React.FC<Props> = ({ setShowModal }) => {
     return <h3>{message.msg}</h3>
   }
 
-  const handleClick = () => {
+  const handleClickAddTask = () => {
     setShowModal(true)
+  }
+
+  const handleClickRefreshTasks = () => {
+    setTasksHaveChanged(true)
   }
 
   return (
     <Container>
       <Header>
         <Title>Minhas tasks</Title>
-        <AddTaskButton onClick={() => handleClick()}>+</AddTaskButton>
+        <ButtonWrapper hide={showModal}>
+          <Button onClick={() => handleClickRefreshTasks()}>
+            <i className="fas fa-sync"></i>
+          </Button>
+          <Button onClick={() => handleClickAddTask()}>
+            <i className="fas fa-plus"></i>
+          </Button>
+        </ButtonWrapper>
       </Header>
       <TasksWrapper>
         {message.show ? displayMessage() : displayTasks()}

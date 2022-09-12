@@ -16,7 +16,7 @@ const Home: React.FC = () => {
         {showModal && <Modal setShowModal={setShowModal} />}
         <Content>
           <UserSection />
-          <TasksSection setShowModal={setShowModal} />
+          <TasksSection showModal={showModal} setShowModal={setShowModal} />
         </Content>
       </Container>
     </BackgroundContainer>
