@@ -6,17 +6,19 @@ import UserSection from '../../layout/userSection'
 import TasksSection from '../../layout/tasksSection'
 import Modal from '../../layout/modal'
 
+import { useModal } from '../../contexts/modalContext'
+
 const Home: React.FC = () => {
-  const [showModal, setShowModal] = React.useState(false)
+  const { modal } = useModal()
 
   return (
     <BackgroundContainer>
       <Container>
         <Header />
-        {showModal && <Modal setShowModal={setShowModal} />}
+        {modal.show && <Modal />}
         <Content>
           <UserSection />
-          <TasksSection showModal={showModal} setShowModal={setShowModal} />
+          <TasksSection />
         </Content>
       </Container>
     </BackgroundContainer>

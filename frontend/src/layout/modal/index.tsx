@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+
 import Field from '../../components/field'
 import TextArea from '../../components/textarea'
+import { useModal } from '../../contexts/modalContext'
+
 import { useTasks } from '../../contexts/tasksContext'
-import { createTodo } from '../../services/api'
+import { createTodo, getTodoById, updateTodo } from '../../services/api'
+
 import {
   BackgroundContainer,
   CloseButton,
@@ -11,47 +15,69 @@ import {
   Title,
 } from './styles'
 
-type Props = {
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-const Modal: React.FC<Props> = ({ setShowModal }) => {
+const Modal: React.FC = () => {
   const { setTasksHaveChanged } = useTasks()
+  const { modal, setModal } = useModal()
 
   const [title, setTitle] = React.useState('')
   const [description, setDescription] = React.useState('')
 
   const AddTask = async () => {
-    const newTask = {
-      title,
-      description,
-    }
-
     try {
-      await createTodo(newTask)
+      await createTodo({ title, description })
       setTasksHaveChanged(true)
-      setShowModal(false)
+      setModal({ _id: '', action: 'none', show: false })
     } catch (err) {
       console.log(err)
     }
   }
 
+  const UpdateTask = async () => {
+    try {
+      await updateTodo(modal._id, { title, description })
+      setTasksHaveChanged(true)
+      setModal({ _id: '', action: 'none', show: false })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const GetTaskById = async () => {
+    try {
+      const response = await getTodoById(modal._id)
+      setTitle(response.data.title)
+      setDescription(response.data.description)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    if (modal.action == 'update') {
+      GetTaskById()
+    }
+  }, [])
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    AddTask()
+    modal.action === 'add' ? AddTask() : UpdateTask()
   }
 
   const handleClick = () => {
-    setShowModal(false)
+    setModal({ _id: '', action: 'none', show: false })
   }
 
   return (
     <BackgroundContainer>
       <Container onSubmit={e => handleSubmit(e)}>
-        <Title>Criar Tarefa</Title>
+        <Title>
+          {modal.action === 'add' ? 'Criar Tarefa' : 'Alterar Tarefa'}
+        </Title>
+
         <CloseButton onClick={() => handleClick()}>
           <i className="fas fa-times"></i>
         </CloseButton>
+
         <Field
           type="text"
           state={title}
@@ -59,13 +85,17 @@ const Modal: React.FC<Props> = ({ setShowModal }) => {
           label="Título"
           placeholder="Insira o título da tarefa"
         />
+
         <TextArea
           state={description}
           setState={setDescription}
           label="Descrição"
           placeholder="Insira a descrição da tarefa"
         />
-        <SubmitButton>Adicionar</SubmitButton>
+
+        <SubmitButton>
+          {modal.action === 'add' ? 'Adicionar' : 'Alterar'}
+        </SubmitButton>
       </Container>
     </BackgroundContainer>
   )

@@ -11,16 +11,14 @@ import {
 import Task from '../../components/task'
 import { useTasks } from '../../contexts/tasksContext'
 import { getAllTodo } from '../../services/api'
+
 import { ResponseType } from '../../types/response'
 import { MessageType } from '../../types/message'
+import { useModal } from '../../contexts/modalContext'
 
-type Props = {
-  showModal: boolean
-  setShowModal: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-const TasksSection: React.FC<Props> = ({ showModal, setShowModal }) => {
+const TasksSection: React.FC = () => {
   const { tasksHaveChanged, setTasksHaveChanged } = useTasks()
+  const { modal, setModal } = useModal()
 
   const [message, setMessage] = useState<MessageType>({
     msg: '',
@@ -64,7 +62,7 @@ const TasksSection: React.FC<Props> = ({ showModal, setShowModal }) => {
   }
 
   const handleClickAddTask = () => {
-    setShowModal(true)
+    setModal({ _id: '', action: 'add', show: true })
   }
 
   const handleClickRefreshTasks = () => {
@@ -75,7 +73,7 @@ const TasksSection: React.FC<Props> = ({ showModal, setShowModal }) => {
     <Container>
       <Header>
         <Title>Minhas tasks</Title>
-        <ButtonWrapper hide={showModal}>
+        <ButtonWrapper hide={modal.show}>
           <Button onClick={() => handleClickRefreshTasks()}>
             <i className="fas fa-sync"></i>
           </Button>

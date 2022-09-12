@@ -27,7 +27,7 @@ export const Description = styled.p`
   font-size: 0.9em;
 `
 
-export const TrashButton = styled.button`
+export const Button = styled.button`
   background-color: ${props => props.theme.background.secondary};
   color: ${props => props.theme.text};
   cursor: pointer;

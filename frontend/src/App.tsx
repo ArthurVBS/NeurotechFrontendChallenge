@@ -1,22 +1,19 @@
 import React from 'react'
-import Routes from './routes'
 
-import { AuthContextProvider } from './contexts/authContext'
-import { TasksContextProvider } from './contexts/tasksContext'
-
-import { ThemeProvider } from 'styled-components'
-import GlobalStyles from './styles/global'
 import theme from './styles/theme'
+import GlobalStyles from './styles/global'
+import { ThemeProvider } from 'styled-components'
+
+import ContextsProvider from './contexts/contexts'
+import Routes from './routes'
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <AuthContextProvider>
-        <TasksContextProvider>
-          <GlobalStyles />
-          <Routes />
-        </TasksContextProvider>
-      </AuthContextProvider>
+      <ContextsProvider>
+        <GlobalStyles />
+        <Routes />
+      </ContextsProvider>
     </ThemeProvider>
   )
 }

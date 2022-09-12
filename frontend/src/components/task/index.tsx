@@ -1,4 +1,5 @@
 import React from 'react'
+import { useModal } from '../../contexts/modalContext'
 import { useTasks } from '../../contexts/tasksContext'
 import { deleteTodo } from '../../services/api'
 import {
@@ -9,7 +10,7 @@ import {
   Content,
   Description,
   Title,
-  TrashButton,
+  Button,
 } from './styles'
 
 type Props = {
@@ -21,7 +22,9 @@ type Props = {
 const Task: React.FC<Props> = ({ _id, title, description }) => {
   const [showConfirmCancelButtons, setShowConfirmCancelButtons] =
     React.useState(false)
+
   const { setTasksHaveChanged } = useTasks()
+  const { setModal } = useModal()
 
   const deleteTask = async () => {
     await deleteTodo(_id)
@@ -36,12 +39,12 @@ const Task: React.FC<Props> = ({ _id, title, description }) => {
     deleteTask()
   }
 
-  const displayTrashButton = () => {
+  const displayButton = () => {
     return (
       <abbr title="Excluir">
-        <TrashButton onClick={() => handleClick()}>
+        <Button onClick={() => handleClick()}>
           <i className="far fa-trash-alt"></i>
-        </TrashButton>
+        </Button>
       </abbr>
     )
   }
@@ -63,6 +66,10 @@ const Task: React.FC<Props> = ({ _id, title, description }) => {
     )
   }
 
+  const handleClickUpdate = () => {
+    setModal({ _id: _id, action: 'update', show: true })
+  }
+
   return (
     <Container>
       <Content>
@@ -70,9 +77,15 @@ const Task: React.FC<Props> = ({ _id, title, description }) => {
         <Description>{description}</Description>
       </Content>
 
+      <abbr title="Alterar">
+        <Button onClick={() => handleClickUpdate()}>
+          <i className="fas fa-pencil-alt"></i>
+        </Button>
+      </abbr>
+
       {showConfirmCancelButtons
         ? displayConfirmCancelButtons()
-        : displayTrashButton()}
+        : displayButton()}
     </Container>
   )
 }

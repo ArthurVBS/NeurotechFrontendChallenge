@@ -17,6 +17,17 @@ export const Container = styled.section`
     background-color: ${props => props.theme.background.primary};
     border-bottom-right-radius: 8px;
     flex-shrink: 1;
+    overflow: overlay;
+
+    ::-webkit-scrollbar-track,
+    ::-webkit-scrollbar-corner {
+      background: ${props => props.theme.background.primary};
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: ${props => props.theme.color.secondary};
+      border: 4px solid ${props => props.theme.background.primary};
+    }
   }
 `
 
@@ -69,8 +80,6 @@ export const ButtonWrapper = styled.div<IProps>`
     position: static;
     display: flex;
     width: initial;
-    min-width: 40px;
-    min-height: 40px;
   }
 `
 
@@ -86,4 +95,9 @@ export const Button = styled.button`
   min-height: 48px;
   border-radius: 50%;
   border: none;
+
+  @media (min-width: 768px) {
+    min-width: 40px;
+    min-height: 40px;
+  }
 `
