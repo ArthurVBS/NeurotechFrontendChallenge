@@ -115,7 +115,11 @@ const Modal: React.FC = () => {
           state={title}
           setState={setTitle}
           label="Título"
-          placeholder="Insira o título da tarefa"
+          placeholder={
+            modal.action === 'add'
+              ? 'Insira o título da tarefa'
+              : 'carregando...'
+          }
           disabled={modal.action === 'delete'}
         />
 
@@ -123,7 +127,11 @@ const Modal: React.FC = () => {
           state={description}
           setState={setDescription}
           label="Descrição"
-          placeholder="Insira a descrição da tarefa"
+          placeholder={
+            modal.action === 'add'
+              ? 'Insira a descrição da tarefa'
+              : 'carregando...'
+          }
           disabled={modal.action === 'delete'}
         />
 
