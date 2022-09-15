@@ -28,10 +28,11 @@
 - 📌 A simple and easy to-do website with login page.
 - 🎨 The proposed model can be found in [figma](https://www.figma.com/file/Unj63Rv7B6nQohX75poADl/TodoApp-Example?node-id=0%3A1).
 - 🥼 The backend is on [neurolake's github](https://github.com/Neurolake/challenge-intern-frontend).
+- 😎 It was not necessary to deploy the application, but I did it in [netlify](https://www.netlify.com/).
 
 ## 💻 Project status:
 
-- 🚧 Project in progress... 🛠
+- Finished project ✔️
 
 ## 🛠 Technologies:
 
@@ -47,9 +48,10 @@
 
 ## 📝 Features:
 
-- [X] Allows user to login with github username.
-- [X] Allows user to add, remove and edit tasks.
-- [X] By logging in and reloading the page, the user will not need to log in again.
+- [X] Allows user to __login with github__ username.
+- [X] Allows user to __add__, __remove__ and __edit__ tasks.
+- [X] By logging in and reloading the page, the user will not need to login again.
+- [X] Allows user to __reload tasks__.
 
 ## ⚙️ Prerequisites:
 
